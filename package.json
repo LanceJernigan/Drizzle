@@ -1,7 +1,7 @@
 {
-  "name": "time-machine",
+  "name": "drizzle",
   "version": "0.0.1",
-  "description": "Time Machine",
+  "description": "A small Flux based store",
   "main": "index.js",
   "scripts": {
     "start": "webpack -w"

@@ -5,7 +5,7 @@ export const createModifier = (action, callback) => {
   }
   
   if (typeof callback !== 'function') {
-    throw new Error('Callback expects a function')
+    throw new Error('Callback is expected to be a function.')
   }
   
   return {

@@ -1,5 +1,5 @@
 /*
- *  eminentImporter - Importer interface for Eminent
+ * createStore - function - creates the store object for our application to use
  *
  * @params - modifiers (array) - list of modifiers called during dispatch
  *         - preloadedState (multi) - state to load into store
@@ -10,6 +10,7 @@ export const createStore = (modifiers, initialState) => {
     let _modifiers = modifiers || []
     let _state = initialState
     let _subscribers = []
+    let isDispatching = false
 
     /*
      *  subscribe - function - creates a subscriber to listen for the given action
@@ -72,17 +73,30 @@ export const createStore = (modifiers, initialState) => {
 
     /*
      * dispatch - function - dispatches the given task
+     *
+     * @params - task (obj)
      */
 
     const dispatch = task => {
+      
+        if (isDispatching) {
+          throw new Error('Cannot dispatch an action in the middle of another dispatch.')
+        }
+        
+        if (typeof task !== 'object') {
+          throw new Error('Dispatched task must be an object.')
+        }
       
         if (typeof task.action === 'undefined') {
           throw new Error('Dispatched task is expected to have an action property.')
         }
         
+        isDispatching = true;
         const modifiers = _modifiers.filter( modifier => modifier.action === task.action)
         
         updateState(modifiers.reduce( (state, modifier) => modifier.callback(state, task), _state ), task.action)
+        
+        isDispatching = false
 
     }
 

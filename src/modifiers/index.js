@@ -19,6 +19,11 @@ let modifiers = [
  *         - callback (function) - the callback we want our modifier to use when triggered
  */
 
-modifiers.push(createModifier('test2', (state, task) => console.log(state, task)))
+modifiers.push(
+  createModifier(
+    'test2',
+    (state, task) => console.log(state, task)
+  )
+)
 
 export default modifiers
